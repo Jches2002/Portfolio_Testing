@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Microsoft Fabric data platform case study: introducing a central reporting environment with SQL, pipelines, Lakehouse, APIs, semantic models and Power BI.">
-    <title>Microsoft Fabric Data Platform | Jack Chesney</title>
+    <meta name="description" content="Microsoft Fabric implementation case study: building a central data and reporting environment from the ground up, from ingestion and transformation to reusable models and Power BI reporting across the business.">
+    <title>Microsoft Fabric Implementation | Jack Chesney</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,8 +20,8 @@
 
     <main id="main">
         <section class="hero compact">
-            <h1>Microsoft Fabric Data Platform</h1>
-            <p>Introducing and building a central data and reporting environment from the ground up</p>
+            <h1>Microsoft Fabric Implementation</h1>
+            <p>Building a central data and reporting environment from the ground up to support reporting across the business</p>
         </section>
 
         <section class="container case-layout">
@@ -115,137 +115,85 @@
                 </figure>
 
                 <h3>SQL Transformations</h3>
-                <p>Selected, sanitised examples show how I bring together operational tables, convert system codes into readable values, create trade lanes and shipment classifications, and prepare data for reporting. Shipments remain the main source-to-model example; the other queries demonstrate supporting SQL skills.</p>
+                <p>I use SQL to combine CargoWise tables, make the data easier to understand and create additional fields needed for reporting. By carrying out these transformations at source, less processing is needed in Fabric, helping reduce capacity usage and making data preparation more efficient.</p>
+                <p>The three dropdowns use selected extracts from my original queries. Shipments remain the main source-to-model example, while the other extracts show supporting SQL techniques without turning the case study into a SQL tutorial.</p>
 
                 <details class="code-disclosure">
-                    <summary>View sanitised SQL — CargoWise shipment transformation</summary>
-                    <p class="code-intro">A portfolio-safe version of the pattern used to join shipment, consolidation, organisation, branch and department information and create reporting fields.</p>
-                    <pre class="dax-code"><code>WITH ShipmentBase AS (
-    SELECT
-        s.ShipmentId,
-        s.ShipmentNumber,
-        s.CreatedDate,
-        s.OriginCode,
-        s.DestinationCode,
-        s.TransportMode,
-        s.DirectionCode,
-        c.ConsolNumber,
-        org.OrganisationName,
-        br.BranchName,
-        dept.DepartmentName
-    FROM dbo.JobShipment AS s
-    LEFT JOIN dbo.JobConShipLink AS link
-        ON link.ShipmentId = s.ShipmentId
-    LEFT JOIN dbo.JobConsol AS c
-        ON c.ConsolId = link.ConsolId
-    LEFT JOIN dbo.OrgHeader AS org
-        ON org.OrganisationId = s.ClientOrganisationId
-    LEFT JOIN dbo.GlbBranch AS br
-        ON br.BranchId = s.BranchId
-    LEFT JOIN dbo.GlbDepartment AS dept
-        ON dept.DepartmentId = s.DepartmentId
-),
-ReportingFields AS (
-    SELECT
-        *,
-        CONCAT(OriginCode, ' - ', DestinationCode) AS TradeLane,
-        CASE DirectionCode
-            WHEN 'I' THEN 'Import'
-            WHEN 'E' THEN 'Export'
-            ELSE 'Other'
-        END AS ShipmentDirection,
-        CASE
-            WHEN TransportMode = 'AIR' THEN 'Air Freight'
-            WHEN TransportMode = 'SEA' THEN 'Sea Freight'
-            WHEN TransportMode = 'ROAD' THEN 'Road Freight'
-            ELSE 'Other'
-        END AS ShipmentClassification
-    FROM ShipmentBase
-)
-SELECT
-    ShipmentId,
-    ShipmentNumber,
-    CreatedDate,
-    ConsolNumber,
-    OrganisationName,
-    BranchName,
-    DepartmentName,
-    TradeLane,
-    ShipmentDirection,
-    ShipmentClassification
-FROM ReportingFields;</code></pre>
+                    <summary>View SQL — Joins &amp; Data Transformation</summary>
+                    <p class="code-intro">These extracts first connect shipment records to related organisation, branch and department dimensions, then use filtered subqueries to select the required address type and emissions field before joining them to the shipment.</p>
+                    <pre class="dax-code"><code>LEFT JOIN jobheader ON JH_ParentID = JS_PK
+LEFT JOIN ORGADDRESS OAL ON JH_OA_LocalChargesAddr = OAL.OA_PK
+LEFT JOIN ORGHEADER OHL ON OAL.OA_OH = OHL.OH_PK
+LEFT JOIN ORGADDRESS OAA ON JH_OA_AgentCollectAddr = OAA.OA_PK
+LEFT JOIN ORGHEADER OHA ON OAA.OA_OH = OHA.OH_PK
+LEFT JOIN GLBBRANCH ON JH_GB = GB_PK
+LEFT JOIN GlbDepartment ON JH_GE = GE_PK
+
+LEFT JOIN (
+    SELECT 
+        E2_ParentID,
+        E2_OA_Address,
+        E2_AddressType
+    FROM jobdocaddress
+    WHERE E2_AddressType = 'CRD'
+) AS SHP ON SHP.E2_ParentID = JS_PK
+
+LEFT JOIN (
+    SELECT XV_DATA, XV_ParentID
+    FROM GENCUSTOMADDONVALUE
+    WHERE XV_NAME = 'Emissions (co2e)'
+) AS EE ON JS_PK = EE.XV_ParentID</code></pre>
                 </details>
 
                 <details class="code-disclosure">
-                    <summary>View sanitised SQL — preferred product relationship with ROW_NUMBER()</summary>
-                    <p class="code-intro">Demonstrates CTEs, window functions and selecting one preferred relationship where several source rows may exist.</p>
-                    <pre class="dax-code"><code>WITH RankedProductRelationships AS (
+                    <summary>View SQL — Calculations &amp; Reporting Fields</summary>
+                    <p class="code-intro">This Organisation Health extract ranks organisations by revenue, calculates activity and average-value measures, and turns the results into clear reporting bands.</p>
+                    <pre class="dax-code"><code>Select 
+RANK() OVER (ORDER BY SUM(JR_LocalSellAmt) DESC) AS Rank,
+OH_Code as Code,
+OH_Fullname as Name,
+Count(DISTINCT(JH_PK)) AS Jobs,
+SUM(JR_LocalSellAmt) as Revenue,
+CAST(SUM(JR_LocalSellAmt) as DECIMAL(18,2))/ NULLIF(COUNT(DISTINCT JH_PK),0) AS AveragePerJob,
+MAX(JH_SystemCreateTimeUtc) as LastJobDate,
+DATEDIFF(Day,MAX(JH_SystemCreateTimeUtc),GETDATE()) AS DaysSinceLastJob,
+Case 
+WHEN SUM(JR_LocalSellAmt) &gt; 100000 THEN 'Gold'
+WHEN SUM(JR_LocalSellAmt) &gt; 25000 THEN 'Silver'
+Else 'Bronze'
+end as HealthBand</code></pre>
+                </details>
+
+                <details class="code-disclosure">
+                    <summary>View SQL — Advanced SQL Techniques</summary>
+                    <p class="code-intro">The first extract uses a CTE and ROW_NUMBER() to prioritise one organisation relationship for each product. The second uses a window function to calculate a running inventory balance for each organisation over time.</p>
+                    <pre class="dax-code"><code>WITH RankedRelations AS (
     SELECT
-        p.ProductId,
-        p.ProductCode,
-        p.ProductDescription,
-        rel.OrganisationId,
-        rel.RelationshipType,
+        OU_OP,          
+        OU_OH,          
+        OU_Relationship,
+        OU_SystemCreateTimeUTC,
         ROW_NUMBER() OVER (
-            PARTITION BY p.ProductId
-            ORDER BY
-                CASE WHEN rel.IsPreferred = 1 THEN 0 ELSE 1 END,
-                rel.UpdatedDate DESC
-        ) AS RelationshipRank
-    FROM dbo.Product AS p
-    LEFT JOIN dbo.ProductOrganisationRelationship AS rel
-        ON rel.ProductId = p.ProductId
-)
-SELECT
-    ProductId,
-    ProductCode,
-    ProductDescription,
-    OrganisationId,
-    RelationshipType
-FROM RankedProductRelationships
-WHERE RelationshipRank = 1;</code></pre>
-                </details>
-
-                <details class="code-disclosure">
-                    <summary>View sanitised SQL — warehouse order aggregation and classification</summary>
-                    <p class="code-intro">Demonstrates multiple CTEs, aggregation, calculated values and classification logic.</p>
-                    <pre class="dax-code"><code>WITH OrderLines AS (
-    SELECT
-        ol.OrderId,
-        COUNT(*) AS LineCount,
-        SUM(ol.OrderQuantity) AS OrderedQuantity,
-        SUM(ol.PickedQuantity) AS PickedQuantity
-    FROM dbo.WarehouseOrderLine AS ol
-    GROUP BY ol.OrderId
-),
-OrderActivity AS (
-    SELECT
-        a.OrderId,
-        MAX(a.ActivityDate) AS LastActivityDate
-    FROM dbo.WarehouseOrderActivity AS a
-    GROUP BY a.OrderId
-),
-OrderSummary AS (
-    SELECT
-        o.OrderId,
-        o.OrderNumber,
-        o.RequiredDate,
-        l.LineCount,
-        l.OrderedQuantity,
-        l.PickedQuantity,
-        a.LastActivityDate,
-        CASE
-            WHEN l.PickedQuantity = 0 THEN 'Not Started'
-            WHEN l.PickedQuantity &lt; l.OrderedQuantity THEN 'Part Picked'
-            WHEN l.PickedQuantity &gt;= l.OrderedQuantity THEN 'Complete'
-            ELSE 'Review'
-        END AS FulfilmentStatus
-    FROM dbo.WarehouseOrder AS o
-    LEFT JOIN OrderLines AS l ON l.OrderId = o.OrderId
-    LEFT JOIN OrderActivity AS a ON a.OrderId = o.OrderId
-)
-SELECT *
-FROM OrderSummary;</code></pre>
+            PARTITION BY OU_OP
+            ORDER BY 
+                CASE OU_Relationship 
+                    WHEN 'OWN' THEN 1
+                    WHEN 'BTH' THEN 2
+                    WHEN 'SUP' THEN 3
+                    ELSE 4
+                END,
+                OU_SystemCreateTimeUTC DESC 
+        ) AS rn
+    FROM OrgPartRelation
+    WHERE OU_Relationship IN ('OWN','BTH','SUP')
+)</code></pre>
+                    <p class="code-intro"><strong>Running inventory calculation</strong></p>
+                    <pre class="dax-code"><code>SELECT *,
+    SUM(Units) OVER (
+        PARTITION BY OrganisationID  
+        ORDER BY FinalisedDate  
+        ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+    ) AS RunningInventory</code></pre>
                 </details>
 
                 <div class="lakehouse-layout">
@@ -253,14 +201,22 @@ FROM OrderSummary;</code></pre>
                         <a href="fabric-lakehouse.png" target="_blank" rel="noopener noreferrer">
                             <img src="fabric-lakehouse.png" alt="Fabric Lakehouse Explorer showing report-ready tables from different business areas">
                         </a>
-                        <figcaption>The Lakehouse centralises reporting tables from different business areas, including shipments.</figcaption>
+                        <figcaption>Centralised reporting tables stored in the Microsoft Fabric Lakehouse.</figcaption>
                     </figure>
                     <article>
                         <h3>Lakehouse and Semantic Models</h3>
-                        <p>The prepared data is stored in the Fabric Lakehouse so it can be reused rather than rebuilt for each report. Reporting models then connect selected facts and dimensions, such as Shipments, Job Charges, Organisations, Origins, Destinations and Dates.</p>
-                        <p>This creates a clearer structure for Power BI while retaining the detailed operational source in CargoWise.</p>
+                        <p>The data extracted and transformed from different business applications is stored centrally in Microsoft Fabric, creating reusable datasets that can support reporting across the business.</p>
+                        <p>From there, I build semantic models to bring together the information needed for different reports, rather than repeatedly preparing the same data from the original applications.</p>
+                        <p>The shipment model is one example of how I've organised data into a clearer structure for Power BI.</p>
                     </article>
                 </div>
+
+                <figure class="case-figure">
+                    <a href="fabric-shipment-semantic-model.png" target="_blank" rel="noopener noreferrer">
+                        <img src="fabric-shipment-semantic-model.png" alt="Shipment semantic model showing related shipment, job charge, organisation, origin, destination and date tables">
+                    </a>
+                    <figcaption>Example shipment semantic model bringing together shipments, job charges, organisations, origins, destinations and dates for reporting.</figcaption>
+                </figure>
             </section>
 
             <section class="case-section">
