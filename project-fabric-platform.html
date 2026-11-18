@@ -178,26 +178,26 @@ end as HealthBand</code></pre>
         ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
     ) AS RunningInventory</code></pre>
 </details>
-<div class="lakehouse-layout">
+<div class="case-gallery">
 <figure class="case-figure">
 <a href="fabric-lakehouse.png" rel="noopener noreferrer" target="_blank">
 <img alt="Fabric Lakehouse Explorer showing report-ready tables from different business areas" src="fabric-lakehouse.png"/>
 </a>
 <figcaption>Centralised reporting tables stored in the Microsoft Fabric Lakehouse.</figcaption>
 </figure>
-<article>
-<h3>Lakehouse and Semantic Models</h3>
-<p>The data extracted and transformed from different business applications is stored centrally in Microsoft Fabric, creating reusable datasets that can support reporting across the business.</p>
-<p>From there, I build semantic models to bring together the information needed for different reports, rather than repeatedly preparing the same data from the original applications.</p>
-<p>The shipment model is one example of how I've organised data into a clearer structure for Power BI.</p>
-</article>
-</div>
 <figure class="case-figure">
 <a href="fabric-shipment-semantic-model.png" rel="noopener noreferrer" target="_blank">
 <img alt="Shipment semantic model showing related shipment, job charge, organisation, origin, destination and date tables" src="fabric-shipment-semantic-model.png"/>
 </a>
 <figcaption>Example shipment semantic model bringing together shipments, job charges, organisations, origins, destinations and dates for reporting.</figcaption>
 </figure>
+</div>
+<article>
+<h3>Lakehouse and Semantic Models</h3>
+<p>The data extracted and transformed from different business applications is stored centrally in Microsoft Fabric, creating reusable datasets that can support reporting across the business.</p>
+<p>From there, I build semantic models to bring together the information needed for different reports, rather than repeatedly preparing the same data from the original applications.</p>
+<p>The shipment model is one example of how I've organised data into a clearer structure for Power BI.</p>
+</article>
 </section>
 <section class="case-section">
 <h2>Integrating Different Data Sources</h2>
@@ -234,7 +234,7 @@ end as HealthBand</code></pre>
 <h2>Reporting Across the Business</h2>
 <p>As the Fabric environment has developed, I've built reporting across different areas of the business, bringing together data from multiple applications to provide clearer information for day-to-day operations and management decisions.</p>
 <p>Reports are available through one Power BI app, with refresh schedules based on how frequently the information is needed.</p>
-<details class="code-disclosure"><summary>Finance &amp; Management</summary><div class="report-detail"><h3>Executive Financial Dashboard</h3><p>Financial performance, profitability, budgets and forecasting.</p><h3>Outstanding Transactions</h3><p>Invoices due, overdue and not yet due, helping monitor outstanding balances.</p></div></details>
+<details class="code-disclosure"><summary>Finance &amp; Management</summary><div class="report-detail"><h3>Executive Financial Dashboard</h3><p>Financial performance, profitability, budgets and forecasting.</p><h3>Customer Financial Overview</h3><p>Customer performance, revenue, gross profit and net profit, helping understand profitability at customer level.</p><h3>Outstanding Transactions</h3><p>Invoices due, overdue and not yet due, helping monitor outstanding balances.</p></div></details>
 <details class="code-disclosure"><summary>Warehouse &amp; Inventory</summary><div class="report-detail"><h3>Warehouse Overview</h3><p>Hourly visibility of current and future orders, overdue orders, back orders and historical activity.</p><h3>Warehouse Inventory</h3><p>Current stock availability and customer inventory information.</p><h3>Warehouse Utilisation</h3><p>Warehouse capacity, customer space usage, pallet numbers and available versus unavailable locations.</p><h3>Shopify Inventory Comparison</h3><p>Compares Shopify and CargoWise stock levels to identify differences.</p></div></details>
 <details class="code-disclosure"><summary>Forwarding, Transport &amp; Agents</summary><div class="report-detail"><h3>Shipment Reporting</h3><p>Shipment activity, origins, destinations, shippers, trade lanes and costs.</p><h3>Transport Performance</h3><p>Profitability, carrier performance, customer analysis and vehicle utilisation.</p><h3>Agent Performance</h3><p>Current agent activity and performance.</p></div></details>
 <details class="code-disclosure"><summary>Sales &amp; Marketing</summary><div class="report-detail"><h3>CRM &amp; Sales Performance</h3><p>Sales opportunities, win/loss trends, conversion, sales performance and customer value.</p><h3>Marketing Performance</h3><p>Campaign activity and marketing insights.</p><h3>Quotation Reporting</h3><p>Quoting activity, conversion, lost quotes and outstanding follow-ups across CargoWise and WebCargo.</p></div></details>
@@ -242,19 +242,9 @@ end as HealthBand</code></pre>
 <details class="code-disclosure"><summary>Workforce &amp; Productivity</summary><div class="report-detail"><h3>Productivity &amp; Capacity</h3><p>Resource utilisation, available capacity, absence and associated costs.</p></div></details>
 <details class="code-disclosure"><summary>Systems, Applications &amp; Data Quality</summary><div class="report-detail"><h3>Master Data</h3><p>Duplicate organisations, incorrect records and data improvement progress.</p><h3>Invoice Processing Portal</h3><p>Automation pass rates, customer-level performance, parsing failures and outstanding work.</p><h3>CargoWise Value</h3><p>Application costs, module utilisation and opportunities to make better use of existing functionality.</p></div></details>
 <details class="code-disclosure"><summary>IT &amp; Project Management</summary><div class="report-detail"><h3>Jira &amp; IT Strategy Reporting</h3><p>Project progress, performance and status, used as a reference point for monthly strategy meetings.</p></div></details>
-<figure class="case-figure">
-<a href="fabric-reporting-app.png" rel="noopener noreferrer" target="_blank">
-<img alt="Power BI app showing reporting areas available across the business" src="fabric-reporting-app.png"/>
-</a>
-<figcaption>Reporting is brought together through one Power BI app, with several areas containing multiple reports.</figcaption>
-</figure>
+
 </section>
-<section class="case-section">
-<h2>Lessons Learned</h2>
-<p>When I first introduced Fabric, I used Dataflow Gen2 to extract and transform CargoWise data. As the environment developed, I found this wasn't the most efficient approach for larger datasets and more complex transformations.</p>
-<p>I moved more of the transformation work into SQL at source, using Fabric pipelines to load the prepared datasets into the Lakehouse. This reduced the amount of processing needed within Fabric and made the ingestion process more efficient.</p>
-<p>I still use Dataflow Gen2 for other sources where it's appropriate. The main lesson has been to choose the method that best fits each source, data volume and reporting requirement rather than forcing every integration into the same approach.</p>
-</section>
+
 <section class="case-section outcome-section">
 <h2>Outcome</h2>
 <p class="metric-highlight"><strong>A central data environment bringing together information from different business applications.</strong></p>
