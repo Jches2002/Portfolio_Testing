@@ -1,127 +1,112 @@
 <!DOCTYPE html>
+
 <html lang="en-GB">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Microsoft Fabric implementation case study: building a central data and reporting environment from the ground up, from ingestion and transformation to reusable models and Power BI reporting across the business.">
-    <title>Microsoft Fabric Implementation | Jack Chesney</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Microsoft Fabric implementation case study: building a central data and reporting environment from the ground up, from ingestion and transformation to reusable models and Power BI reporting across the business." name="description"/>
+<title>Microsoft Fabric Implementation | Jack Chesney</title>
+<link href="style.css" rel="stylesheet"/>
 </head>
 <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <nav aria-label="Main navigation">
-        <a class="site-logo" href="index.html"><img src="logo-white.png" alt="Jack Chesney logo"></a>
-        <a href="index.html">Home</a>
-        <a href="about.html">About Me</a>
-        <a href="journey.html">My Journey</a>
-        <a href="projects.html" aria-current="page">Projects</a>
-        <a href="contact.html">Contact</a>
-    </nav>
+<a class="skip-link" href="#main">Skip to content</a>
+<nav aria-label="Main navigation">
+<a class="site-logo" href="index.html"><img alt="Jack Chesney logo" src="logo-white.png"/></a>
+<a href="index.html">Home</a>
+<a href="about.html">About Me</a>
+<a href="journey.html">My Journey</a>
+<a aria-current="page" href="projects.html">Projects</a>
+<a href="contact.html">Contact</a>
+</nav>
+<main id="main">
+<section class="hero compact">
+<h1>Microsoft Fabric Implementation</h1>
+<p>Introduced and built a central data and reporting environment from the ground up, bringing together business applications and transforming how data is managed, accessed and used across the business.</p>
+</section>
+<section class="container case-layout">
+<a class="back-link" href="projects.html">← Back to Projects</a>
+<div class="case-meta">
+<div><strong>Project</strong><span>Microsoft Fabric Implementation</span></div>
+<div><strong>Tools</strong><span>Microsoft Fabric, SQL, Python, Power BI, Dataflow Gen2</span></div>
+<div><strong>Status</strong><span>Implemented and actively maintained</span></div>
+</div>
+<div class="case-note portfolio-data privacy-note"><strong>Portfolio Data</strong><br/>Screenshots and code are cropped to remove credentials, internal identifiers and commercially sensitive information. The examples show the approach and skills without exposing production data.</div>
+<section class="case-section">
+<h2>Project at a Glance</h2>
+<div class="story-grid">
+<article class="story-step">
+<span>01</span>
+<h3>Problem</h3>
+<p>The business had no central reporting data environment, with reports connecting directly to separate applications and data preparation repeated across reports.</p>
+</article>
+<article class="story-step">
+<span>02</span>
+<h3>Solution / Change</h3>
+<p>I introduced and implemented Microsoft Fabric, building a central environment for extracting, transforming, storing and modelling data from different business applications.</p>
+</article>
+<article class="story-step">
+<span>03</span>
+<h3>Outcome</h3>
+<p>Microsoft Fabric has become the central environment for data and reporting across the business, bringing together information from different applications, reducing repeated work and providing reliable reporting that supports better decisions.</p>
+</article>
+</div>
+</section>
+<section class="case-section">
+<h2>Problem</h2>
+<p>Before Microsoft Fabric, there was no central reporting data environment. Reports connected directly to business applications, meaning data had to be extracted and transformed separately each time, making reporting less efficient and harder to maintain.</p>
+<p>There was also an opportunity to make better use of the data already held across the business, bringing it together to provide deeper analysis, improve processes and support future development.</p>
+</section>
+<section class="case-section">
+<h2>Solution / Change</h2>
+<p>I built the Microsoft Fabric environment from scratch, bringing together data from CargoWise and other business applications using SQL, pipelines, notebooks and Dataflow Gen2.</p>
+<p>As reporting has grown across the business, I've continued developing the environment with reusable datasets, semantic models, deployment pipelines and GitHub integration, making reporting easier to manage and maintain.</p>
+<div class="comparison-grid">
+<article>
+<h3>Before</h3>
+<ul>
+<li>No central environment for storing and managing reporting data.</li>
+<li>Reports connected directly to separate business applications.</li>
+<li>Data extraction and transformations repeated for individual reports.</li>
+<li>Limited ability to combine information across systems for more detailed analysis.</li>
+</ul>
+</article>
+<article>
+<h3>Now</h3>
+<ul>
+<li>Central data environment bringing together information from different business applications.</li>
+<li>Data extracted and transformed centrally, creating reusable datasets and reducing repeated work.</li>
+<li>More consistent and reliable reporting, with refresh schedules based on business needs.</li>
+<li>Reporting accessible across the business through one Power BI app, supporting deeper analysis and better decisions.</li>
+</ul>
+</article>
+</div>
+</section>
+<section class="case-section">
 
-    <main id="main">
-        <section class="hero compact">
-            <h1>Microsoft Fabric Implementation</h1>
-            <p>Building a central data and reporting environment from the ground up to support reporting across the business</p>
-        </section>
-
-        <section class="container case-layout">
-            <a class="back-link" href="projects.html">← Back to Projects</a>
-
-            <div class="case-meta">
-                <div><strong>Project</strong><span>Central Data &amp; Reporting Environment</span></div>
-                <div><strong>Tools</strong><span>Microsoft Fabric, SQL, Python, Power BI</span></div>
-                <div><strong>Status</strong><span>Implemented and actively managed</span></div>
-            </div>
-
-            <div class="case-note portfolio-data privacy-note">
-                <strong>Portfolio Data</strong><br>
-                Screenshots and code are cropped or sanitised to remove credentials, internal identifiers and commercially sensitive logic. The examples show the approach and skills without exposing production data.
-            </div>
-
-            <section class="case-section">
-                <h2>Project at a Glance</h2>
-                <div class="story-grid">
-                    <article class="story-step">
-                        <span>01</span>
-                        <h3>Problem</h3>
-                        <p>There was no central reporting data environment. Reports connected directly to applications and similar transformations were repeatedly rebuilt for individual reports.</p>
-                    </article>
-                    <article class="story-step">
-                        <span>02</span>
-                        <h3>Solution / Change</h3>
-                        <p>I introduced Microsoft Fabric and developed a managed route from operational sources through ingestion, transformation and storage to reusable models and Power BI.</p>
-                    </article>
-                    <article class="story-step">
-                        <span>03</span>
-                        <h3>Outcome</h3>
-                        <p>The business now has a central reporting environment that supports financial, operational and management reporting with more consistent and reliable data.</p>
-                    </article>
-                </div>
-            </section>
-
-            <section class="case-section">
-                <p class="section-kicker">Where the work started</p>
-                <h2>Problem</h2>
-                <p>Reporting was built directly against separate business applications. Data preparation and business rules were repeated across reports, making changes harder to manage and increasing the risk of inconsistent results.</p>
-                <p>As reporting needs grew, the business needed a central environment that could support different sources, refresh needs and reporting audiences without recreating the same work each time.</p>
-            </section>
-
-            <section class="case-section">
-                <p class="section-kicker">What I introduced</p>
-                <h2>Solution / Change</h2>
-                <p>I introduced Microsoft Fabric and developed the environment in stages: bringing in source data, applying transformations, organising report-ready tables in a Lakehouse, creating reusable semantic models and publishing reporting through Power BI.</p>
-                <div class="comparison-grid">
-                    <article>
-                        <h3>Before</h3>
-                        <ul>
-                            <li>Reports connected directly to individual applications</li>
-                            <li>Transformations repeated across separate reports</li>
-                            <li>Different rules and structures were harder to maintain</li>
-                            <li>Limited central visibility of reporting data</li>
-                        </ul>
-                    </article>
-                    <article>
-                        <h3>Now</h3>
-                        <ul>
-                            <li>Multiple sources brought into one managed environment</li>
-                            <li>Reusable SQL transformations and reporting tables</li>
-                            <li>Lakehouse storage and semantic models shared across reports</li>
-                            <li>Controlled delivery, version history and refresh schedules</li>
-                        </ul>
-                    </article>
-                </div>
-            </section>
-
-            <section class="case-section">
-                <p class="section-kicker">Main technical example</p>
-                <h2>From CargoWise to Reporting-Ready Data</h2>
-                <p>CargoWise contains thousands of interconnected tables covering different areas of the business. The database is designed to support operational processes, which makes extracting and preparing data for reporting more complicated.</p>
-                <p>Rather than bringing everything into Fabric, I use SQL to extract the information needed, combine tables and apply business logic to create clearer datasets for reporting. <strong>Shipments are used here as one example</strong> of the approach applied across the wider database.</p>
-
-                <div class="architecture-flow" aria-label="CargoWise to Power BI architecture">
-                    <span>CargoWise Source</span><b aria-hidden="true">→</b>
-                    <span>SQL Transformation</span><b aria-hidden="true">→</b>
-                    <span>Fabric Pipeline</span><b aria-hidden="true">→</b>
-                    <span>Lakehouse</span><b aria-hidden="true">→</b>
-                    <span>Semantic Model</span><b aria-hidden="true">→</b>
-                    <span>Power BI</span>
-                </div>
-
-                <figure class="case-figure">
-                    <a href="cargowise-shipment-source.png" target="_blank" rel="noopener noreferrer">
-                        <img src="cargowise-shipment-source.png" alt="Part of the CargoWise shipment-related database diagram with interconnected operational tables">
-                    </a>
-                    <figcaption>An example of CargoWise's complex database structure, showing only part of the shipment-related area. Reporting also requires information from other areas of the database.</figcaption>
-                </figure>
-
-                <h3>SQL Transformations</h3>
-                <p>I use SQL to combine CargoWise tables, make the data easier to understand and create additional fields needed for reporting. By carrying out these transformations at source, less processing is needed in Fabric, helping reduce capacity usage and making data preparation more efficient.</p>
-                <p>The three dropdowns use selected extracts from my original queries. Shipments remain the main source-to-model example, while the other extracts show supporting SQL techniques without turning the case study into a SQL tutorial.</p>
-
-                <details class="code-disclosure">
-                    <summary>View SQL — Joins &amp; Data Transformation</summary>
-                    <p class="code-intro">These extracts first connect shipment records to related organisation, branch and department dimensions, then use filtered subqueries to select the required address type and emissions field before joining them to the shipment.</p>
-                    <pre class="dax-code"><code>LEFT JOIN jobheader ON JH_ParentID = JS_PK
+<h2>From CargoWise to Reporting-Ready Data</h2>
+<p>CargoWise contains thousands of tables covering different areas of the business. The database is designed to support operational processes, which makes extracting and preparing data for reporting more complicated.</p>
+<p>Rather than bringing everything into Fabric, I use SQL to extract the information needed, combine tables and transform the data into a clearer structure for reporting. Shipments are used here as one example of the approach applied across the wider database.</p>
+<div aria-label="CargoWise to Power BI architecture" class="architecture-flow">
+<span>CargoWise Source</span><b aria-hidden="true">→</b>
+<span>SQL Transformation</span><b aria-hidden="true">→</b>
+<span>Fabric Pipeline</span><b aria-hidden="true">→</b>
+<span>Lakehouse</span><b aria-hidden="true">→</b>
+<span>Semantic Model</span><b aria-hidden="true">→</b>
+<span>Power BI</span>
+</div>
+<figure class="case-figure">
+<a href="cargowise-shipment-source.png" rel="noopener noreferrer" target="_blank">
+<img alt="Part of the CargoWise shipment-related database diagram showing operational tables and relationships" src="cargowise-shipment-source.png"/>
+</a>
+<figcaption>An example of CargoWise's complex database structure, showing only part of the shipment-related area. Reporting also requires information from other areas of the database.</figcaption>
+</figure>
+<h3>SQL Transformations</h3>
+<p>I use SQL to combine CargoWise tables, make the data easier to understand and create additional fields needed for reporting. By carrying out these transformations at source, less processing is needed in Fabric, helping reduce capacity usage and making data preparation more efficient.</p>
+<p>The examples below show different ways I've prepared CargoWise data before loading it into Fabric.</p>
+<details class="code-disclosure">
+<summary>View SQL — Joins &amp; Data Transformation</summary>
+<p class="code-intro">Shipment reporting requires information from several CargoWise tables. These extracts show how I join related information and select specific records before loading the data into Fabric.</p>
+<pre class="dax-code"><code>LEFT JOIN jobheader ON JH_ParentID = JS_PK
 LEFT JOIN ORGADDRESS OAL ON JH_OA_LocalChargesAddr = OAL.OA_PK
 LEFT JOIN ORGHEADER OHL ON OAL.OA_OH = OHL.OH_PK
 LEFT JOIN ORGADDRESS OAA ON JH_OA_AgentCollectAddr = OAA.OA_PK
@@ -143,12 +128,11 @@ LEFT JOIN (
     FROM GENCUSTOMADDONVALUE
     WHERE XV_NAME = 'Emissions (co2e)'
 ) AS EE ON JS_PK = EE.XV_ParentID</code></pre>
-                </details>
-
-                <details class="code-disclosure">
-                    <summary>View SQL — Calculations &amp; Reporting Fields</summary>
-                    <p class="code-intro">This Organisation Health extract ranks organisations by revenue, calculates activity and average-value measures, and turns the results into clear reporting bands.</p>
-                    <pre class="dax-code"><code>Select 
+</details>
+<details class="code-disclosure">
+<summary>View SQL — Calculations &amp; Reporting Fields</summary>
+<p class="code-intro">This example uses revenue, job activity, ranking and date calculations to create useful reporting fields before the data is loaded into Fabric.</p>
+<pre class="dax-code"><code>Select 
 RANK() OVER (ORDER BY SUM(JR_LocalSellAmt) DESC) AS Rank,
 OH_Code as Code,
 OH_Fullname as Name,
@@ -162,12 +146,11 @@ WHEN SUM(JR_LocalSellAmt) &gt; 100000 THEN 'Gold'
 WHEN SUM(JR_LocalSellAmt) &gt; 25000 THEN 'Silver'
 Else 'Bronze'
 end as HealthBand</code></pre>
-                </details>
-
-                <details class="code-disclosure">
-                    <summary>View SQL — Advanced SQL Techniques</summary>
-                    <p class="code-intro">The first extract uses a CTE and ROW_NUMBER() to prioritise one organisation relationship for each product. The second uses a window function to calculate a running inventory balance for each organisation over time.</p>
-                    <pre class="dax-code"><code>WITH RankedRelations AS (
+</details>
+<details class="code-disclosure">
+<summary>View SQL — Advanced SQL Techniques</summary>
+<p class="code-intro">These examples show how I use CTEs and window functions to select the required records and calculate running inventory over time.</p>
+<pre class="dax-code"><code>WITH RankedRelations AS (
     SELECT
         OU_OP,          
         OU_OH,          
@@ -187,133 +170,110 @@ end as HealthBand</code></pre>
     FROM OrgPartRelation
     WHERE OU_Relationship IN ('OWN','BTH','SUP')
 )</code></pre>
-                    <p class="code-intro"><strong>Running inventory calculation</strong></p>
-                    <pre class="dax-code"><code>SELECT *,
+<p class="code-intro"><strong>Running inventory calculation</strong></p>
+<pre class="dax-code"><code>SELECT *,
     SUM(Units) OVER (
         PARTITION BY OrganisationID  
         ORDER BY FinalisedDate  
         ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
     ) AS RunningInventory</code></pre>
-                </details>
-
-                <div class="lakehouse-layout">
-                    <figure class="case-figure">
-                        <a href="fabric-lakehouse.png" target="_blank" rel="noopener noreferrer">
-                            <img src="fabric-lakehouse.png" alt="Fabric Lakehouse Explorer showing report-ready tables from different business areas">
-                        </a>
-                        <figcaption>Centralised reporting tables stored in the Microsoft Fabric Lakehouse.</figcaption>
-                    </figure>
-                    <article>
-                        <h3>Lakehouse and Semantic Models</h3>
-                        <p>The data extracted and transformed from different business applications is stored centrally in Microsoft Fabric, creating reusable datasets that can support reporting across the business.</p>
-                        <p>From there, I build semantic models to bring together the information needed for different reports, rather than repeatedly preparing the same data from the original applications.</p>
-                        <p>The shipment model is one example of how I've organised data into a clearer structure for Power BI.</p>
-                    </article>
-                </div>
-
-                <figure class="case-figure">
-                    <a href="fabric-shipment-semantic-model.png" target="_blank" rel="noopener noreferrer">
-                        <img src="fabric-shipment-semantic-model.png" alt="Shipment semantic model showing related shipment, job charge, organisation, origin, destination and date tables">
-                    </a>
-                    <figcaption>Example shipment semantic model bringing together shipments, job charges, organisations, origins, destinations and dates for reporting.</figcaption>
-                </figure>
-            </section>
-
-            <section class="case-section">
-                <p class="section-kicker">Supporting ingestion examples</p>
-                <h2>Integrating Different Data Sources</h2>
-                <p>Different business applications require different approaches. Alongside CargoWise, I have implemented integrations using APIs, notebooks, Dataflow Gen2 and pipelines according to the source and reporting need.</p>
-
-                <div class="source-grid">
-                    <article class="source-card"><strong>CargoWise</strong><span>SQL + Fabric Pipelines</span><p>Centralising operational data and creating reusable report-ready tables.</p></article>
-                    <article class="source-card"><strong>Shopify</strong><span>API + Notebook + SQL</span><p>Comparing Shopify inventory with CargoWise to identify differences.</p></article>
-                    <article class="source-card"><strong>WebCargo</strong><span>API + Notebooks</span><p>Combining quotation data with CargoWise for a wider view of quote activity.</p></article>
-                </div>
-
-                <figure class="case-figure">
-                    <a href="fabric-shopify-pipeline.png" target="_blank" rel="noopener noreferrer">
-                        <img src="fabric-shopify-pipeline.png" alt="Shopify inventory pipeline showing active Bronze, Silver and Gold notebook stages">
-                    </a>
-                    <figcaption>The active Shopify process moves inventory through Bronze, Silver and Gold. SQL is used for the Silver and Gold transformations.</figcaption>
-                </figure>
-
-                <details class="code-disclosure">
-                    <summary>View sanitised Python — Shopify API pagination</summary>
-                    <p class="code-intro">I researched and implemented this API-based approach and continue to manage it. The extract shows the pagination pattern without credentials, shop names or warehouse identifiers.</p>
-                    <pre class="dax-code"><code>all_inventory = []
-
-while inventory_url:
-    response = requests.get(inventory_url, headers=headers)
-    response.raise_for_status()
-
-    data = response.json()
-    all_inventory.extend(data.get("inventory_levels", []))
-
-    next_url = None
-    link_header = response.headers.get("Link")
-
-    if link_header:
-        for link in link_header.split(","):
-            if 'rel="next"' in link:
-                next_url = link.split(";")[0].strip(" &lt;&gt;")
-                break
-
-    inventory_url = next_url</code></pre>
-                </details>
-
-                <p>Dataflow Gen2 is also used for sources including PeopleHR, SharePoint and Viva Insights, with Power Query transformations and reusable date tables. These are described here without adding more screenshots, keeping the case study focused on the overall environment.</p>
-            </section>
-
-            <section class="case-section">
-                <p class="section-kicker">Keeping the platform dependable</p>
-                <h2>Managing the Environment</h2>
-                <p>The platform is organised through Fabric workspaces, with deployment pipelines and GitHub integration supporting controlled changes. Refresh schedules are set according to reporting need rather than applying one frequency to every dataset.</p>
-                <div class="environment-grid">
-                    <article><h3>Controlled Delivery</h3><p>Deployment pipelines separate stages of delivery and reduce the risk of changes being made directly in the live reporting environment.</p></article>
-                    <article><h3>Version Control</h3><p>GitHub integration provides a clearer record of changes and supports more structured development.</p></article>
-                    <article><h3>Refresh by Need</h3><p>Hourly, daily and monthly refresh schedules are used according to how current each area of reporting needs to be.</p></article>
-                </div>
-            </section>
-
-            <section class="case-section">
-                <p class="section-kicker">What the business has now</p>
-                <h2>Reporting Across the Business</h2>
-                <p>The environment supports financial, operational and management reporting across different departments. Reusable datasets and semantic models provide a clearer route from source applications to Power BI, while access can be managed through the reporting app and workspace structure.</p>
-                <div class="report-summary-grid">
-                    <article><h3>Financial</h3><p>Performance, budgets, forecasts and controlled management access.</p></article>
-                    <article><h3>Operational</h3><p>Shipments, transport, productivity, inventory and process visibility.</p></article>
-                    <article><h3>Management</h3><p>Consistent information for monitoring performance and supporting decisions.</p></article>
-                </div>
-            </section>
-
-            <section class="case-section">
-                <h2>Lessons Learned</h2>
-                <p>The environment has evolved as reporting use and data volumes have grown. For CargoWise, moving more transformation work from an early Dataflow Gen2 approach into SQL-based ingestion made the logic easier to inspect, reuse and manage.</p>
-                <p>The main lesson has been to choose the method that best fits each source rather than forcing every integration into the same pattern. SQL, notebooks, APIs, Dataflow Gen2 and pipelines each have a place in the platform.</p>
-            </section>
-
-            <section class="case-section outcome-section">
-                <h2>Outcome</h2>
-                <p class="metric-highlight"><strong>A central reporting environment was created where none existed before.</strong></p>
-                <p>Data from separate business applications can now be ingested, transformed, stored and used through a managed Fabric platform.</p>
-
-                <p class="metric-highlight"><strong>Repeated preparation has been reduced through reusable reporting data.</strong></p>
-                <p>Lakehouse tables, SQL transformations and semantic models can support more than one report instead of rebuilding similar logic each time.</p>
-
-                <p class="metric-highlight"><strong>Reporting is more consistent, reliable and easier to manage.</strong></p>
-                <p>Controlled delivery, version history and refresh schedules provide a clearer way to maintain the environment as reporting needs change.</p>
-
-                <p class="metric-highlight"><strong>Data quality and process issues are easier to identify.</strong></p>
-                <p>Bringing sources together — such as Shopify and CargoWise inventory — makes differences visible so they can be investigated rather than remaining hidden between systems.</p>
-            </section>
-
-            <section class="case-section">
-                <h2>Tools &amp; Skills</h2>
-                <p class="tag-line">Microsoft Fabric · Lakehouse · Data Factory · Pipelines · SQL · Python · Notebooks · Dataflow Gen2 · Power Query · ETL · Data Quality · Semantic Modelling · Power BI · DAX · GitHub · Deployment Pipelines</p>
-            </section>
-        </section>
-    </main>
-
-    <footer><p>Jack Chesney</p><p>Microsoft Fabric • Power BI • ETL • SQL • Data Engineering • Business Applications • CargoWise</p></footer>
+</details>
+<div class="lakehouse-layout">
+<figure class="case-figure">
+<a href="fabric-lakehouse.png" rel="noopener noreferrer" target="_blank">
+<img alt="Fabric Lakehouse Explorer showing report-ready tables from different business areas" src="fabric-lakehouse.png"/>
+</a>
+<figcaption>Centralised reporting tables stored in the Microsoft Fabric Lakehouse.</figcaption>
+</figure>
+<article>
+<h3>Lakehouse and Semantic Models</h3>
+<p>The data extracted and transformed from different business applications is stored centrally in Microsoft Fabric, creating reusable datasets that can support reporting across the business.</p>
+<p>From there, I build semantic models to bring together the information needed for different reports, rather than repeatedly preparing the same data from the original applications.</p>
+<p>The shipment model is one example of how I've organised data into a clearer structure for Power BI.</p>
+</article>
+</div>
+<figure class="case-figure">
+<a href="fabric-shipment-semantic-model.png" rel="noopener noreferrer" target="_blank">
+<img alt="Shipment semantic model showing related shipment, job charge, organisation, origin, destination and date tables" src="fabric-shipment-semantic-model.png"/>
+</a>
+<figcaption>Example shipment semantic model bringing together shipments, job charges, organisations, origins, destinations and dates for reporting.</figcaption>
+</figure>
+</section>
+<section class="case-section">
+<h2>Integrating Different Data Sources</h2>
+<p>Different business applications require different approaches to bringing data into Fabric. Alongside CargoWise, I've implemented integrations using APIs, notebooks, Dataflow Gen2 and pipelines, depending on the source and reporting requirements.</p>
+<div class="source-grid">
+<article class="source-card"><strong>CargoWise</strong><span>SQL + Fabric Pipelines</span><p>Operational data is transformed at source and loaded into reusable Lakehouse tables.</p></article>
+<article class="source-card"><strong>Shopify</strong><span>API + Notebook + SQL</span><p>Inventory is processed through Bronze, Silver and Gold before being compared with CargoWise.</p></article>
+<article class="source-card"><strong>WebCargo</strong><span>API + Notebooks</span><p>Quotation data is combined with CargoWise to provide a wider view of quote activity.</p></article>
+</div>
+<figure class="case-figure">
+<a href="fabric-shopify-pipeline.png" rel="noopener noreferrer" target="_blank">
+<img alt="Shopify inventory pipeline showing active Bronze, Silver and Gold notebook stages" src="fabric-shopify-pipeline.png"/>
+</a>
+<figcaption>The Shopify process moves inventory through Bronze, Silver and Gold, with SQL used for the Silver and Gold transformations.</figcaption>
+</figure>
+<p>I've also used Dataflow Gen2 for API and application data including PeopleHR, Jira, SharePoint and Viva Insights. This allows me to choose the method that best fits each source rather than using the same approach for everything.</p>
+</section>
+<section class="case-section">
+<h2>Managing the Environment</h2>
+<p>As the reporting environment has grown, I've continued to develop and maintain it, managing changes, refreshes and reporting availability across the business.</p>
+<div class="environment-grid">
+<article><h3>Controlled Delivery</h3><p>I use deployment pipelines to test changes before moving them into production, helping reduce the risk of disrupting reporting already used by the business.</p></article>
+<article><h3>Version Control</h3><p>GitHub integration allows me to track changes and maintain version history as the environment develops.</p></article>
+<article><h3>Refresh by Need</h3><p>Hourly, daily and monthly refresh schedules are used according to how current each area of reporting needs to be.</p></article>
+</div>
+<figure class="case-figure">
+<a href="fabric-deployment-pipelines.png" rel="noopener noreferrer" target="_blank">
+<img alt="Microsoft Fabric deployment pipelines used to manage testing and production changes" src="fabric-deployment-pipelines.png"/>
+</a>
+<figcaption>Deployment pipelines support testing and production changes across the Fabric environment.</figcaption>
+</figure>
+</section>
+<section class="case-section">
+<h2>Reporting Across the Business</h2>
+<p>As the Fabric environment has developed, I've built reporting across different areas of the business, bringing together data from multiple applications to provide clearer information for day-to-day operations and management decisions.</p>
+<p>Reports are available through one Power BI app, with refresh schedules based on how frequently the information is needed.</p>
+<details class="code-disclosure"><summary>Finance &amp; Management</summary><div class="report-detail"><h3>Executive Financial Dashboard</h3><p>Financial performance, profitability, budgets and forecasting.</p><h3>Outstanding Transactions</h3><p>Invoices due, overdue and not yet due, helping monitor outstanding balances.</p></div></details>
+<details class="code-disclosure"><summary>Warehouse &amp; Inventory</summary><div class="report-detail"><h3>Warehouse Overview</h3><p>Hourly visibility of current and future orders, overdue orders, back orders and historical activity.</p><h3>Warehouse Inventory</h3><p>Current stock availability and customer inventory information.</p><h3>Warehouse Utilisation</h3><p>Warehouse capacity, customer space usage, pallet numbers and available versus unavailable locations.</p><h3>Shopify Inventory Comparison</h3><p>Compares Shopify and CargoWise stock levels to identify differences.</p></div></details>
+<details class="code-disclosure"><summary>Forwarding, Transport &amp; Agents</summary><div class="report-detail"><h3>Shipment Reporting</h3><p>Shipment activity, origins, destinations, shippers, trade lanes and costs.</p><h3>Transport Performance</h3><p>Profitability, carrier performance, customer analysis and vehicle utilisation.</p><h3>Agent Performance</h3><p>Current agent activity and performance.</p></div></details>
+<details class="code-disclosure"><summary>Sales &amp; Marketing</summary><div class="report-detail"><h3>CRM &amp; Sales Performance</h3><p>Sales opportunities, win/loss trends, conversion, sales performance and customer value.</p><h3>Marketing Performance</h3><p>Campaign activity and marketing insights.</p><h3>Quotation Reporting</h3><p>Quoting activity, conversion, lost quotes and outstanding follow-ups across CargoWise and WebCargo.</p></div></details>
+<details class="code-disclosure"><summary>Customer Reporting</summary><div class="report-detail"><h3>Customer Dashboard</h3><p>Customer shipments, emissions, warehouse movements and inventory in one view.</p><h3>Customer Shipment Overview</h3><p>Shipment activity, origins, destinations, shippers, trade lanes and costs.</p></div></details>
+<details class="code-disclosure"><summary>Workforce &amp; Productivity</summary><div class="report-detail"><h3>Productivity &amp; Capacity</h3><p>Resource utilisation, available capacity, absence and associated costs.</p></div></details>
+<details class="code-disclosure"><summary>Systems, Applications &amp; Data Quality</summary><div class="report-detail"><h3>Master Data</h3><p>Duplicate organisations, incorrect records and data improvement progress.</p><h3>Invoice Processing Portal</h3><p>Automation pass rates, customer-level performance, parsing failures and outstanding work.</p><h3>CargoWise Value</h3><p>Application costs, module utilisation and opportunities to make better use of existing functionality.</p></div></details>
+<details class="code-disclosure"><summary>IT &amp; Project Management</summary><div class="report-detail"><h3>Jira &amp; IT Strategy Reporting</h3><p>Project progress, performance and status, used as a reference point for monthly strategy meetings.</p></div></details>
+<figure class="case-figure">
+<a href="fabric-reporting-app.png" rel="noopener noreferrer" target="_blank">
+<img alt="Power BI app showing reporting areas available across the business" src="fabric-reporting-app.png"/>
+</a>
+<figcaption>Reporting is brought together through one Power BI app, with several areas containing multiple reports.</figcaption>
+</figure>
+</section>
+<section class="case-section">
+<h2>Lessons Learned</h2>
+<p>When I first introduced Fabric, I used Dataflow Gen2 to extract and transform CargoWise data. As the environment developed, I found this wasn't the most efficient approach for larger datasets and more complex transformations.</p>
+<p>I moved more of the transformation work into SQL at source, using Fabric pipelines to load the prepared datasets into the Lakehouse. This reduced the amount of processing needed within Fabric and made the ingestion process more efficient.</p>
+<p>I still use Dataflow Gen2 for other sources where it's appropriate. The main lesson has been to choose the method that best fits each source, data volume and reporting requirement rather than forcing every integration into the same approach.</p>
+</section>
+<section class="case-section outcome-section">
+<h2>Outcome</h2>
+<p class="metric-highlight"><strong>A central data environment bringing together information from different business applications.</strong></p>
+<p>Data from CargoWise and other systems is now brought together in Microsoft Fabric, allowing information to be combined for more detailed reporting and analysis across the business.</p>
+<p class="metric-highlight"><strong>More efficient and consistent reporting through reusable datasets.</strong></p>
+<p>Data is extracted and transformed centrally, reducing repeated preparation work across reports. Reusing the same datasets also reduces the risk of inconsistent information and calculations between reports.</p>
+<p class="metric-highlight"><strong>Reporting is easier to access and kept up to date.</strong></p>
+<p>Users can access reporting through one Power BI app on their laptops or phones, with hourly, daily and monthly refresh schedules depending on business requirements.</p>
+<p class="metric-highlight"><strong>A more reliable and organised reporting environment.</strong></p>
+<p>Using deployment pipelines and GitHub allows me to manage changes, keep track of previous versions and reduce the risk of disrupting reporting used across the business.</p>
+<p class="metric-highlight"><strong>Better data quality, processes and business decisions.</strong></p>
+<p>Reporting has helped identify incorrect data, master-data issues and opportunities to improve processes. It also provides management with clearer financial and operational information to support decisions across the business.</p>
+</section>
+<section class="case-section">
+<h2>Tools &amp; Skills</h2>
+<p class="tag-line">Microsoft Fabric · SQL · Power BI · Python · Dataflow Gen2 · Data Factory · Pipelines · Lakehouse · Notebooks · APIs · ETL · Data Modelling · Semantic Models · Deployment Pipelines · GitHub · Data Quality</p>
+</section>
+</section>
+</main>
+<footer><p>Jack Chesney</p><p>Microsoft Fabric • Power BI • ETL • SQL • Data Engineering • Business Applications • CargoWise</p></footer>
 </body>
 </html>
