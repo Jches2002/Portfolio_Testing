@@ -105,29 +105,19 @@
 <p>The examples below show different ways I've prepared CargoWise data before loading it into Fabric.</p>
 <details class="code-disclosure">
 <summary>View SQL — Joins &amp; Data Transformation</summary>
-<p class="code-intro">Shipment reporting requires information from several CargoWise tables. These extracts show how I join related information and select specific records before loading the data into Fabric.</p>
-<pre class="dax-code"><code>LEFT JOIN jobheader ON JH_ParentID = JS_PK
+<p class="code-intro">Shipment reporting requires information from multiple CargoWise tables. I use joins to bring together related data, including organisations and additional shipment information. Subqueries allow me to select specific records before joining them to the main dataset.</p>
+<pre class="dax-code"><code>LEFT JOIN JOBHEADER ON JH_ParentID = JS_PK
 LEFT JOIN ORGADDRESS OAL ON JH_OA_LocalChargesAddr = OAL.OA_PK
 LEFT JOIN ORGHEADER OHL ON OAL.OA_OH = OHL.OH_PK
-LEFT JOIN ORGADDRESS OAA ON JH_OA_AgentCollectAddr = OAA.OA_PK
-LEFT JOIN ORGHEADER OHA ON OAA.OA_OH = OHA.OH_PK
-LEFT JOIN GLBBRANCH ON JH_GB = GB_PK
-LEFT JOIN GlbDepartment ON JH_GE = GE_PK
 
 LEFT JOIN (
-    SELECT 
+    SELECT
         E2_ParentID,
         E2_OA_Address,
         E2_AddressType
     FROM jobdocaddress
     WHERE E2_AddressType = 'CRD'
-) AS SHP ON SHP.E2_ParentID = JS_PK
-
-LEFT JOIN (
-    SELECT XV_DATA, XV_ParentID
-    FROM GENCUSTOMADDONVALUE
-    WHERE XV_NAME = 'Emissions (co2e)'
-) AS EE ON JS_PK = EE.XV_ParentID</code></pre>
+) AS SHP ON SHP.E2_ParentID = JS_PK</code></pre>
 </details>
 <details class="code-disclosure">
 <summary>View SQL — Calculations &amp; Reporting Fields</summary>
@@ -148,8 +138,9 @@ Else 'Bronze'
 end as HealthBand</code></pre>
 </details>
 <details class="code-disclosure">
-<summary>View SQL — Advanced SQL Techniques</summary>
-<p class="code-intro">These examples show how I use CTEs and window functions to select the required records and calculate running inventory over time.</p>
+<summary>View SQL — CTEs &amp; Window Functions</summary>
+<p class="code-intro">I use CTEs and window functions to handle situations where multiple records exist for the same item. The first example ranks organisation relationships by priority and creation date, allowing me to select one organisation for each product before loading the data into Fabric. The second calculates running inventory over time.</p>
+<p class="code-intro"><strong>Selecting organisation relationships</strong></p>
 <pre class="dax-code"><code>WITH RankedRelations AS (
     SELECT
         OU_OP,          
@@ -178,6 +169,13 @@ end as HealthBand</code></pre>
         ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
     ) AS RunningInventory</code></pre>
 </details>
+
+<article>
+<h3>Lakehouse and Semantic Models</h3>
+<p>The data extracted and transformed from different business applications is stored centrally in Microsoft Fabric, creating reusable datasets that can support reporting across the business.</p>
+<p>From there, I build semantic models to bring together the information needed for different reports, rather than repeatedly preparing the same data from the original applications.</p>
+<p>The shipment model is one example of how I've organised data into a clearer structure for Power BI.</p>
+</article>
 <div class="case-gallery">
 <figure class="case-figure">
 <a href="fabric-lakehouse.png" rel="noopener noreferrer" target="_blank">
@@ -192,12 +190,6 @@ end as HealthBand</code></pre>
 <figcaption>Example shipment semantic model bringing together shipments, job charges, organisations, origins, destinations and dates for reporting.</figcaption>
 </figure>
 </div>
-<article>
-<h3>Lakehouse and Semantic Models</h3>
-<p>The data extracted and transformed from different business applications is stored centrally in Microsoft Fabric, creating reusable datasets that can support reporting across the business.</p>
-<p>From there, I build semantic models to bring together the information needed for different reports, rather than repeatedly preparing the same data from the original applications.</p>
-<p>The shipment model is one example of how I've organised data into a clearer structure for Power BI.</p>
-</article>
 </section>
 <section class="case-section">
 <h2>Integrating Different Data Sources</h2>
